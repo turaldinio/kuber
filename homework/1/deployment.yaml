@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-deployment
-  namespace: homework
+  namespace: homework # запуск в нужном пространстве
 spec:
   replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
-  selector:
+      maxUnavailable: 1 # на какое кол-во можем уменьшится
+      maxSurge: 1 # на какое количества реплик можно поднять поды
+  selector: # начала описания репликасета
     matchLabels:
-      app: web
-  template:
+      app: web # какими подами управляем
+  template: # как выглядят поды
     metadata:
       labels:
-        app: web
+        app: web # каждый под будет иметь имя, чтобы selector мог их найти
     spec:
       containers:
         - name: nginx
@@ -24,4 +24,4 @@ spec:
           ports:
             - containerPort: 80
       nodeSelector:
-        homework: "true"
+        homework: "true" # на нодах с меткой
