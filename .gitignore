@@ -1,5 +1,3 @@
-PodeExample.yaml
-ReplicaSet.yaml
+lection/*
 .idea
 kuber.iml
-Deployments.yaml
