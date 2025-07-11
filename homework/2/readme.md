@@ -3,4 +3,4 @@
 
 итоговый результат:
 
-![img.png](img.png)
+![img.png](manifests%2Fresources%2Fimg.png)
