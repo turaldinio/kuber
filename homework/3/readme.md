@@ -1,4 +1,4 @@
-само задание ![dz.png](resources%2Fdz.png)![img.png](resources%2Fimg.png)
+само задание ![dz.png](resources%2Fdz.png)
 
 теперь выполняем:
 для начала : запусти все с предыдущего дз (ибо тут модификации по deployment есть)
