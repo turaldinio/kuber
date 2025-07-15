@@ -1,0 +1,22 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metrics-reader
+rules:
+  - apiGroups: [""]
+    resources: ["nodes/metrics", "pods/metrics"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: monitoring-metrics-access
+  namespace: homework
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: metrics-reader
+subjects:
+  - kind: ServiceAccount
+    name: monitoring
+    namespace: homework

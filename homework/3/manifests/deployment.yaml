@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  namespace: homework
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      serviceAccountName: monitoring
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config-volume  # Конф NGINX
+              mountPath: /etc/nginx/conf.d
+            - name: homework-config-volume  # Данные ConfigMap
+              mountPath: /homework/conf
+      volumes:
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config  #  ConfigMap с конфигурацией
+        - name: homework-config-volume
+          configMap:
+            name: homework-config  # ConfigMap с данными (key1.....)
+      nodeSelector:
+        homework: "true"

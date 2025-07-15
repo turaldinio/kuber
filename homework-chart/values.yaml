@@ -1,0 +1,27 @@
+replicaCount: 3
+image:
+  repository: nginx
+  tag: latest
+service:
+  type: ClusterIP
+  port: 80
+ingress:
+  enabled: true
+  host: dd-k8s.com
+  className: nginx
+config:
+  nginxConfig: |
+    server {
+      listen 80;
+      location /conf/file {
+        alias /homework/conf/file;
+        default_type text/plain;
+      }
+      location / {
+        root /usr/share/nginx/html;
+      }
+    }
+  homeworkConfig: |
+    key1=value1
+    key2=value2
+    key3=value3
