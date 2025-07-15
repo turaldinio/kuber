@@ -7,21 +7,32 @@ service:
   port: 80
 ingress:
   enabled: true
-  host: dd-k8s.com
   className: nginx
+  host: dd-k8s.com
 config:
-  nginxConfig: |
-    server {
-      listen 80;
-      location /conf/file {
-        alias /homework/conf/file;
-        default_type text/plain;
-      }
-      location / {
-        root /usr/share/nginx/html;
-      }
+  data:
+    key1: value1
+    key2: value2
+    key3: value3
+nginxConfig: |
+  server {
+    listen 80;
+  
+    location /conf/file {
+      alias /homework/conf/file;
+      default_type text/plain;
     }
-  homeworkConfig: |
-    key1=value1
-    key2=value2
-    key3=value3
+
+    location / {
+      root /usr/share/nginx/html;
+    }
+  }
+nodeSelector:
+  homework: "true"
+serviceAccount:
+  create: true
+  name: monitoring
+mysql:
+  enabled: false
+persistence:
+  size: 1Gi  # Добавляем значение по умолчанию

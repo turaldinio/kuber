@@ -1,0 +1,45 @@
+# templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-deployment
+  namespace: homework
+spec:
+  replicas: {{ .Values.replicaCount | default 3 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name | default "monitoring" }}
+      containers:
+        - name: nginx
+          image: "{{ .Values.image.repository | default "nginx" }}:{{ .Values.image.tag | default "latest" }}"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/conf.d
+            - name: homework-config-volume
+              mountPath: /homework/conf
+      volumes:
+        - name: nginx-config-volume
+          configMap:
+            name: {{ .Chart.Name }}-nginx-config
+        - name: homework-config-volume
+          configMap:
+            name: {{ .Chart.Name }}-config
+      nodeSelector:
+        {{- if .Values.nodeSelector }}
+        {{ .Values.nodeSelector | toYaml | nindent 8 }}
+        {{- else }}
+        homework: "true"  # ← значение по умолчанию
+        {{- end }}
