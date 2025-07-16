@@ -1,0 +1,9 @@
+apiVersion: dd.homework/v1
+kind: MySQL
+metadata:
+  name: example-mysql
+spec:
+  image: mysql:8.0
+  database: mydatabase
+  password: securepassword123
+  storage_size: 10Gi
