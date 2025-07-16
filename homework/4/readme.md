@@ -24,6 +24,6 @@ kubectl proxy --port=8080
 
 ![example_2.png](resources%2Fexample_2.png)
 
-veni vidi vichi - пришел увидео победил, красиво , работает 
+veni vidi vichi - пришел увидео победил, красиво , работает
 
 больше с кубером общаться не хочется..
